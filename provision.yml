@@ -1,0 +1,20 @@
+---
+- hosts: home
+  tasks:
+  - name: installer le serveur web nginx 
+    yum:
+      name:  "{{ item }}"
+      state: present
+    with_items:
+      - nginx
+      - curl
+    when: ansible_nodename == "Lenovo-ideapad"
+  - name: Start service nginx, if not started
+    service:
+      name: nginx
+      state: started
+  - name: Make sure a service is running
+    systemd:
+      state: started
+      name: nginx
+    
